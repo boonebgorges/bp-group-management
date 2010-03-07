@@ -20,3 +20,8 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 
 = 0.1 =
 * Initial release
+
+= 0.2 =
+* Fully localizable
+* Avatar bug fixed (thanks for pointing it out, anointed!)
+* Hooks added for additional group actions
