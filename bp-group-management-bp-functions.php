@@ -33,8 +33,9 @@ function bp_group_management_admin_screen() {
 }
 
 
-/* Creates the main group listing page (Dashboard > BuddyPress > Group Management */
+/* Creates the main group listing page (Dashboard > BuddyPress > Group Management) */
 function bp_group_management_admin_main() {
+            	
 
 	/* Group delete requests are sent back to the main page. This handles group deletions */
 	if( $_GET['group_action'] == 'delete' ) {
@@ -50,19 +51,52 @@ function bp_group_management_admin_main() {
 		}
 	}
 
-	/* Orders the groups when the user clicks a column header */
-	if( $_GET['order'] )
-		$order = $_GET['order'];	
 	?>
 
           <div class="wrap">
             <h2><?php _e( 'Group Management', 'bp-group-management' ) ?></h2>
             <br />
+            <?php 
+            	$args = array( 'type' => 'alphabetical', 'per_page' => 10 );
+            	
+            	if ( $_GET['order'] == 'name' )
+            		$args['type'] = 'alphabetical';
+            	else if ( $_GET['order'] == 'group_id' )
+            		$args['type'] = 'newest';
+            	else if ( $_GET['order'] == 'popular' )
+            		$args['type'] = 'popular';
+            	
+            	if ( $_GET['grpage'] )
+            		$args['page'] = $_GET['grpage'];
+            	else 
+            		$args['page'] = 1;
+            
+            	if( bp_has_groups( $args ) ) : 
+            		global $groups_template;
+            ?>
+            
+            <div class="tablenav">
+    			<div class="tablenav-pages">
+					<span class="displaying-num" id="group-dir-count">
+						<?php bp_groups_pagination_count() ?>
+					</span>
+
+					<span class="page-numbers" id="group-dir-pag">
+						<?php bp_group_management_pagination_links() ?>
+					</span>
+
+				</div>
+			</div>
+            
+            
+            
             <table width="100%" cellpadding="3" cellspacing="3" class="widefat">
 			<thead>
 				<tr>
 					<th scope="col" class="check-column"></th>
-            		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=group_id"><?php _e( 'Group ID', 'bp-group-management' ) ?></a></th>
+            		<th scope="col" class="bp-gm-group-id-header"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=group_id"><?php _e( 'Group ID', 'bp-group-management' ) ?></a></th>
+            		
+					<th scope="col"><?php _e( 'Group avatar', 'bp-group-management' ); ?></th>
             		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=name"><?php _e( 'Group Name', 'bp-group-management' ) ?></a></th>
             		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=group_id"><?php _e( 'Date Created', 'bp-group-management' ) ?></a></th>
             		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=popular"><?php _e( 'Number of Members', 'bp-group-management' ) ?></a></th>
@@ -72,29 +106,24 @@ function bp_group_management_admin_main() {
             </thead>
             
 			<tbody id="the-list">
-            	<?php
-            	$args = array( 'type' => 'alphabetical' );
-            	
-            	if ( $order == 'name' )
-            		$args = array( 'type' => 'alphabetical' );
-            	else if ( $order == 'group_id' )
-            		$args = array( 'type' => 'newest' );
-            	else if ( $order == 'popular' )
-            		$args = array( 'type' => 'popular' );
-            	
-            	if( bp_has_groups( $args ) ) : while( bp_groups() ) : bp_the_group(); ?>
-            		<?php global $groups_template; 
-            			  if ( !$group )
-            			  		$group =& $groups_template->group;
-            		?>
-            		
+            	<?php while( bp_groups() ) : bp_the_group(); ?> 
+   					<?php 
+   						if ( !$group )
+    						$group =& $groups_template->group;
+            		?>	
             		<tr>
             			<th scope="row" class="check-column">
 							
 						</th>
-						<th scope="row">
+						
+						<th scope="row"  class="bp-gm-group-id">
 							<?php bp_group_id(); ?>
 						</th>
+						
+						
+						<td scope="row" class="bp-gm-avatar">
+  							 <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&action=edit&id=<?php bp_group_id() ?>" class="edit"><?php bp_group_avatar( 'width=35&height=35' ); ?></a>
+ 						</td>
 						
 						<td scope="row">
 							<?php bp_group_name(); ?>
@@ -134,12 +163,28 @@ function bp_group_management_admin_main() {
 						
             		</tr>
             	<?php endwhile; ?>
-            	<?php else: ?>
             
-            	<?php endif; ?>
             </tbody>
          	</table>
+         	
+         	<div class="tablenav">
+    			<div class="tablenav-pages">
 
+					<span class="displaying-num" id="group-dir-count">
+						<?php bp_groups_pagination_count() ?>
+					</span>
+
+					<span class="page-numbers" id="group-dir-pag">
+						<?php bp_group_management_pagination_links() ?>
+					</span>
+
+				</div>
+			</div>
+
+            	<?php else: ?>
+            	You don't have any groups to manage.
+            	
+            	<?php endif; ?>
         </div>
 
 <?php
@@ -325,10 +370,40 @@ function bp_group_management_admin_edit() {
 		<h3><?php _e('Add members to group', 'bp-group-management') ?></h3>
 		<ul>
 		<?php
-			$members_obj = BP_Core_User::get_users('alphabetical');
-			$members = $members_obj['users'];
+			if ( !$members ) {
+				$members_obj = BP_Core_User::get_users('alphabetical');
+				$members = $members_obj['users'];
+			}
+			/*$pag_num = 50;
 			
+			echo "members: " . count($members);
+			echo "pag_num: " . $pag_num;
+			$start = ($_GET['members_page'] - 1) * $pag_num + 1;
+			
+			$pag_links = paginate_links( array(
+				'base' => add_query_arg( 'members_page', '%#%' ), 
+				'format' => '',
+				'total' => ceil(count($members) / $pag_num),
+				'current' => $_GET['members_page'],
+				'show_all' => false,
+				'prev_next' => true,
+				'prev_text' => '&larr;',
+				'next_text' => '&rarr;',
+				'mid_size' => 1,
+				'type' => 'list',
+				));
+			
+			echo '<div class="tablenav"> <div class="tablenav-pages">';
+			echo $pag_links;
+			echo '</div></div>';*/
+						
+			//for( $i = $start; $i < $start + $pag_num; $i++ ) {
 			foreach( $members as $m ) {
+				/*if ( $members[$i] )
+					$m = $members[$i];
+				else
+					die(); */
+					
 				if( groups_is_user_member( $m->id, $id ) )
 					continue;
 				
@@ -486,6 +561,25 @@ function bp_group_management_join_group( $group_id, $user_id = false ) {
 	do_action( 'groups_join_group', $group_id, $user_id );
 
 	return true;
+}
+
+function bp_group_management_pagination_links() {
+	global $groups_template;
+	$add_args = array();
+	if ( $_GET['order'] )
+		$add_args['order'] = $_GET['order'];
+	
+	$links = paginate_links( array(
+			'base' => add_query_arg( array( 'grpage' => '%#%', 'num' => $groups_template->pag_num, 's' => $_REQUEST['s'], 'sortby' => $groups_template->sort_by ) ),
+			'format' => '',
+			'total' => ceil($groups_template->total_group_count / $groups_template->pag_num),
+			'current' => $groups_template->pag_page,
+			'prev_text' => '&larr;',
+			'next_text' => '&rarr;',
+			'mid_size' => 1,
+			'add_args' => $add_args
+		));
+	echo $links;
 }
 
 ?>

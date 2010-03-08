@@ -7,3 +7,12 @@
 	width: 250px;
 	float: left;
 }
+
+th.bp-gm-group-id-header, th.bp-gm-group-id {
+	width: 80px;
+}
+
+td.bp-gm-avatar {
+	width: 80px;
+	padding: 5px 10px;
+}

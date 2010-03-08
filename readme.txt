@@ -16,6 +16,11 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 
 * Upload and activate on your BuddyPress blog
 
+== Translation credits ==
+
+* Italian: Luca Camellini
+
+
 == Changelog ==
 
 = 0.1 =
@@ -25,3 +30,7 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Fully localizable
 * Avatar bug fixed (thanks for pointing it out, anointed!)
 * Hooks added for additional group actions
+
+= 0.3 = 
+* Pagination on group list allows you to see all groups (thanks, Andy!)
+* Italian translation included (thanks, Luca!)
