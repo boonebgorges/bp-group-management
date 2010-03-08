@@ -4,7 +4,7 @@ Tags: buddypress, groups, members, manage
 Requires at least: WPMU 2.8, BuddyPress 1.2
 Tested up to: WPMU 2.9.1.1, BuddyPress 1.2.1
 Donate link: http://teleogistic.net/donate/
-Stable tag: trunk
+Stable tag: 0.3
 
 Allows site administrators to manage BuddyPress group membership
 
@@ -19,6 +19,7 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 == Translation credits ==
 
 * Italian: Luca Camellini
+* Turkish: gk
 
 
 == Changelog ==
