@@ -20,6 +20,7 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 
 * Italian: Luca Camellini
 * Turkish: gk
+* German: Tom
 
 
 == Changelog ==
