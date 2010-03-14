@@ -423,6 +423,8 @@ function bp_group_management_admin_edit() {
 		</ul>
 		</div>		
 		
+		<?php do_action( 'bp_gm_more_group_actions' ); ?>
+		
 	</div>
 <?php
 }
