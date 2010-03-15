@@ -371,8 +371,11 @@ function bp_group_management_admin_edit() {
 		<ul>
 		<?php
 			if ( !$members ) {
-				$members_obj = BP_Core_User::get_users('alphabetical');
-				$members = $members_obj['users'];
+				global $wpdb;
+				$members_obj = bp_core_get_users('type=alphabetical&per_page=10000');
+				
+				$query = "SELECT * FROM {$wpdb->users}";
+				$members = $wpdb->get_results( $query, ARRAY_A );
 			}
 			/*$pag_num = 50;
 			
@@ -404,17 +407,17 @@ function bp_group_management_admin_edit() {
 				else
 					die(); */
 					
-				if( groups_is_user_member( $m->id, $id ) )
+				if( groups_is_user_member( $m['ID'], $id ) )
 					continue;
 				
-				if( groups_is_user_banned( $m->id, $id ) )
+				if( groups_is_user_banned( $m['ID'], $id ) )
 					continue;
 			
-				$addlink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . $m->id . "&amp;member_action=add";
+				$addlink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . $m['ID'] . "&amp;member_action=add";
 				$addlink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($addlink, 'bp-group-management-action_add') : $addlink;
 			?>
 			<ul>
-				<strong><a href="<?php echo $addlink; ?>"><?php _e( 'Add', 'bp-group-management' ) ?></a></strong> - <?php echo $m->display_name; ?>
+				<strong><a href="<?php echo $addlink; ?>"><?php _e( 'Add', 'bp-group-management' ) ?></a></strong> - <?php echo $m['display_name']; ?>
 			</ul>
 			<?php }
 			
