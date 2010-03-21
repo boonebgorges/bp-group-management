@@ -4,7 +4,7 @@ Tags: buddypress, groups, members, manage
 Requires at least: WPMU 2.8, BuddyPress 1.2
 Tested up to: WPMU 2.9.1.1, BuddyPress 1.2.1
 Donate link: http://teleogistic.net/donate/
-Stable tag: 0.3.1
+Stable tag: 0.4
 
 Allows site administrators to manage BuddyPress group membership
 
@@ -42,3 +42,10 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Turkish translation added (thanks, gk!)
 * German translation added (thanks, Tom!)
 * Sitewide roster altered to include all members, not just members active on BP
+
+= 0.4 =
+* Added plugin settings page
+* Member list is paginated (defaults to 50)
+* Admin can now specify how many groups/members to show per page
+* Group Actions menu added to Members and Delete pages
+* Links to Group Admin page added
