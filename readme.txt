@@ -49,3 +49,6 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Admin can now specify how many groups/members to show per page
 * Group Actions menu added to Members and Delete pages
 * Links to Group Admin page added
+
+= 0.4.x =
+* Added group type (Public/Private/Hidden) to group listing table

@@ -97,6 +97,7 @@ function bp_group_management_admin_main() {
             		
 					<th scope="col"><?php _e( 'Group avatar', 'bp-group-management' ); ?></th>
             		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=name"><?php _e( 'Group Name', 'bp-group-management' ) ?></a></th>
+            		<th scope="col"><?php _e( 'Group type', 'bp-group-management' ); ?></th>
             		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=group_id"><?php _e( 'Date Created', 'bp-group-management' ) ?></a></th>
             		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=popular"><?php _e( 'Number of Members', 'bp-group-management' ) ?></a></th>
             		
@@ -149,6 +150,10 @@ function bp_group_management_admin_main() {
 									<?php endif; ?>
 
 							
+						</td>
+						
+						<td scope="row">
+							<?php bp_group_type(); ?>
 						</td>
 						
 						<td scope="row">
