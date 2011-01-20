@@ -21,7 +21,7 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Italian: Luca Camellini
 * Turkish: gk
 * German: Tom
-* Dutch: Anja
+* Dutch: [Anja](http://werkgroepen.net/wordpress/)
   
   
 == Changelog ==
