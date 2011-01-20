@@ -130,7 +130,7 @@ function bp_group_management_admin_main() {
 									<br/>
 									<?php
 									$controlActions	= array();
-									$controlActions[]	= '<a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=' . bp_get_group_id() . '" class="edit">' . __('Members') . '</a>';								
+									$controlActions[]	= '<a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=' . bp_get_group_id() . '" class="edit">' . __('Members', 'bp-group-management' ) . '</a>';								
 									
 									
 									$controlActions[]	= '<a class="delete" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=delete&amp;id=' . bp_get_group_id() . '">' . __("Delete") . '</a>';
@@ -192,7 +192,7 @@ function bp_group_management_admin_main() {
             	
             	<?php endif; ?>
         
-        <a class="button" id="bp-gm-settings-link" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&action=settings">Plugin settings</a>
+        <a class="button" id="bp-gm-settings-link" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&action=settings"><?php _e( 'Plugin settings', 'bp-group-management' ); ?></a>
         </div>
 
 <?php
@@ -298,7 +298,7 @@ function bp_group_management_admin_edit() {
 	    <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
 	    		
 		<div class="bp-gm-group-actions">
-	    <h3>Group actions</h3>   
+	    <h3><?php _e( 'Group actions', 'bp-group-management' ); ?></h3>   
 	    
 	    <?php bp_group_management_group_action_buttons( $id, $group ) ?>
 
@@ -338,7 +338,7 @@ function bp_group_management_admin_edit() {
 								$unkicklink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=unkick";
 								$unkicklink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($unkicklink, 'bp-group-management-action_unkick') : $unkicklink;
 							?>
-							<?php bp_group_member_link() ?> <?php _e( '(banned)', 'buddypress') ?> <span class="small"> - <a href="<?php echo $unkicklink; ?>" class="confirm" title="<?php _e( 'Remove Ban', 'buddypress' ) ?>"><?php _e( 'Remove Ban', 'buddypress' ); ?></a>
+							<?php bp_group_member_link() ?> <?php _e( '(banned)', 'bp-group-management') ?> <span class="small"> - <a href="<?php echo $unkicklink; ?>" class="confirm" title="<?php _e( 'Remove Ban', 'bp-group-management' ) ?>"><?php _e( 'Remove Ban', 'bp-group-management' ); ?></a>
 
 					<?php else : ?>
 
@@ -361,13 +361,13 @@ function bp_group_management_admin_edit() {
 							?>
 							<strong><?php bp_group_member_link() ?></strong>
 							<span class="small"> - 
-								<a href="<?php echo $kicklink; ?>" class="confirm" title="<?php _e( 'Kick and ban this member', 'buddypress' ); ?>"><?php _e( 'Kick &amp; Ban', 'buddypress' ); ?></a> | 
+								<a href="<?php echo $kicklink; ?>" class="confirm" title="<?php _e( 'Kick and ban this member', 'bp-group-management' ); ?>"><?php _e( 'Kick &amp; Ban', 'bp-group-management' ); ?></a> | 
 								<?php if ( groups_is_user_admin( bp_get_group_member_id(), $id ) ) : ?>
-									<a href="<?php echo $demotelink; ?>" class="confirm" title="<?php _e( 'Demote to Member', 'buddypress' ); ?>"><?php _e( 'Demote to Member', 'buddypress' ); ?></a>								
+									<a href="<?php echo $demotelink; ?>" class="confirm" title="<?php _e( 'Demote to Member', 'bp-group-management' ); ?>"><?php _e( 'Demote to Member', 'bp-group-management' ); ?></a>								
 								<?php elseif ( groups_is_user_mod( bp_get_group_member_id(), $id ) ) : ?>
-									<a href="<?php echo $demotelink; ?>" class="confirm" title="<?php _e( 'Demote to Member', 'buddypress' ); ?>"><?php _e( 'Demote to Member', 'buddypress' ); ?></a> | <a href="<?php echo $adminlink; ?>" class="confirm" title="<?php _e( 'Promote to Admin', 'buddypress' ); ?>"><?php _e( 'Promote to Admin', 'buddypress' ); ?></a></span>
+									<a href="<?php echo $demotelink; ?>" class="confirm" title="<?php _e( 'Demote to Member', 'bp-group-management' ); ?>"><?php _e( 'Demote to Member', 'bp-group-management' ); ?></a> | <a href="<?php echo $adminlink; ?>" class="confirm" title="<?php _e( 'Promote to Admin', 'bp-group-management' ); ?>"><?php _e( 'Promote to Admin', 'bp-group-management' ); ?></a></span>
 								<?php else : ?>
-									<a href="<?php echo $modlink; ?>" class="confirm" title="<?php _e( 'Promote to Moderator', 'buddypress' ); ?>"><?php _e( 'Promote to Moderator', 'buddypress' ); ?></a> | <a href="<?php echo $adminlink; ?>" class="confirm" title="<?php _e( 'Promote to Admin', 'buddypress' ); ?>"><?php _e( 'Promote to Admin', 'buddypress' ); ?></a></span>								
+									<a href="<?php echo $modlink; ?>" class="confirm" title="<?php _e( 'Promote to Moderator', 'bp-group-management' ); ?>"><?php _e( 'Promote to Moderator', 'bp-group-management' ); ?></a> | <a href="<?php echo $adminlink; ?>" class="confirm" title="<?php _e( 'Promote to Admin', 'bp-group-management' ); ?>"><?php _e( 'Promote to Admin', 'bp-group-management' ); ?></a></span>								
 								<?php endif; ?>
 
 					<?php endif; ?>
@@ -497,7 +497,7 @@ function bp_group_management_admin_delete() {
 	    <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
 	    		
 		<div class="bp-gm-group-actions">
-	    <h3>Group actions</h3>   
+	    <h3><?php _e( 'Group actions', 'bp-group-management' ); ?></h3>   
 	    
 	    <?php bp_group_management_group_action_buttons( $id, $group ) ?>
 
@@ -510,7 +510,7 @@ function bp_group_management_admin_delete() {
 	 	<p><?php _e( 'You are about to delete the group', 'bp-group-management' ) ?> <em><?php echo bp_get_group_name( $group ); ?></em>. <strong><?php _e( 'This action cannot be undone.', 'bp-group-management' ) ?></strong></p>
 	 	
 	 	<p><a class="button-primary action" href="<?php echo $deletelink; ?>"><?php _e( 'Delete Group', 'bp-group-management' ) ?></a> 
-	 	<a class="button-secondary action" href="<?php echo $backlink; ?>"><?php _e('Oops, I changed my mind') ?></a></p>
+	 	<a class="button-secondary action" href="<?php echo $backlink; ?>"><?php _e('Oops, I changed my mind', 'bp-group-management') ?></a></p>
 	</div>
 <?php
 }
