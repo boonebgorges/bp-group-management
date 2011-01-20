@@ -2,9 +2,9 @@
 Contributors: boonebgorges, cuny-academic-commons
 Tags: buddypress, groups, members, manage
 Requires at least: WPMU 2.8, BuddyPress 1.2
-Tested up to: WPMU 2.9.1.1, BuddyPress 1.2.1
+Tested up to: WP 3.0.4, BuddyPress 1.2.7
 Donate link: http://teleogistic.net/donate/
-Stable tag: 0.4
+Stable tag: 0.4.1
 
 Allows site administrators to manage BuddyPress group membership
 
