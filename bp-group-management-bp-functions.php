@@ -576,7 +576,7 @@ function bp_group_management_admin_add() {
 	$plugin_page = add_submenu_page( 'bp-general-settings', __('Group Management','bp-group-management'), __('Group Management','bp-group-management'), 'manage_options', __FILE__, 'bp_group_management_admin_screen' );
 	add_action('admin_print_styles-' . $plugin_page, 'bp_group_management_css');
 }
-add_action( 'admin_menu', 'bp_group_management_admin_add', 70 );
+add_action( is_multisite() && function_exists( 'is_network_admin' ) ? 'network_admin_menu' : 'admin_menu', 'bp_group_management_admin_add', 70 );
 
 
 function bp_group_management_css() {
