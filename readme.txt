@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: boonebgorges, cuny-academic-commons
 Tags: buddypress, groups, members, manage
-Requires at least: WPMU 2.8, BuddyPress 1.2
-Tested up to: WP 3.0.4, BuddyPress 1.2.7
+Requires at least: WP 2.8, BuddyPress 1.2
+Tested up to: WP 3.1, BuddyPress 1.2.8
 Donate link: http://teleogistic.net/donate/
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 
 Allows site administrators to manage BuddyPress group membership
 
@@ -22,10 +22,12 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Turkish: gk
 * German: Tom
 * Dutch: [Anja](http://werkgroepen.net/wordpress/)
-  
-  
+
 == Changelog ==
   
+= 0.4.2 =
+* Compatibility with WP 3.1 Network Admin
+
 = 0.4.1 =
 * Added group type (Public/Private/Hidden) to group listing table
 * Added missing gettext calls
