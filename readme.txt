@@ -4,7 +4,7 @@ Tags: buddypress, groups, members, manage
 Requires at least: WP 2.8, BuddyPress 1.2
 Tested up to: WP 3.1, BuddyPress 1.2.8
 Donate link: http://teleogistic.net/donate/
-Stable tag: 0.4.2
+Stable tag: 0.4.3
 
 Allows site administrators to manage BuddyPress group membership
 
