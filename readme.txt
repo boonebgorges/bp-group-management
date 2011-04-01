@@ -25,6 +25,9 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 
 == Changelog ==
   
+= 0.4.3 =
+* Fixes bp_gm_member_action hook location so it fires properly.
+
 = 0.4.2 =
 * Compatibility with WP 3.1 Network Admin
 
