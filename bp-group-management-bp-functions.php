@@ -7,7 +7,9 @@ function bp_group_management_admin_screen() {
 
 	do_action( 'bp_gm_action' );
 	
-	switch( $_GET['action'] ) {
+	$action = isset( $_GET['action'] ) ? $_GET['action'] : false;
+	
+	switch( $action ) {
 		case "settings":
 			bp_group_management_settings();
 			break;
@@ -30,7 +32,7 @@ function bp_group_management_admin_main() {
             	
 
 	/* Group delete requests are sent back to the main page. This handles group deletions */
-	if( $_GET['group_action'] == 'delete' ) {
+	if( isset( $_GET['group_action'] ) && $_GET['group_action'] == 'delete' ) {
 		if ( !check_admin_referer( 'bp-group-management-action_group_delete' ) )
 				return false;
 				
@@ -58,17 +60,16 @@ function bp_group_management_admin_main() {
             		
             	$args = array( 'type' => 'alphabetical', 'per_page' => $per_page );
             	
-            	if ( $_GET['order'] == 'name' )
+            	$order = isset( $_GET['order'] ) ? $_GET['order'] : false;
+            	
+            	if ( $order == 'name' )
             		$args['type'] = 'alphabetical';
-            	else if ( $_GET['order'] == 'group_id' )
+            	else if ( $order == 'group_id' )
             		$args['type'] = 'newest';
-            	else if ( $_GET['order'] == 'popular' )
+            	else if ( $order == 'popular' )
             		$args['type'] = 'popular';
             	
-            	if ( $_GET['grpage'] )
-            		$args['page'] = $_GET['grpage'];
-            	else 
-            		$args['page'] = 1;
+            	$args['page'] = isset( $_GET['grpage'] ) ? $_GET['grpage'] : 1;
             
             	if( bp_has_groups( $args ) ) : 
             		global $groups_template;
@@ -93,13 +94,13 @@ function bp_group_management_admin_main() {
 			<thead>
 				<tr>
 					<th scope="col" class="check-column"></th>
-            		<th scope="col" class="bp-gm-group-id-header"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=group_id"><?php _e( 'Group ID', 'bp-group-management' ) ?></a></th>
+            		<th scope="col" class="bp-gm-group-id-header"><a href="admin.php?page=bp-group-management&amp;order=group_id"><?php _e( 'Group ID', 'bp-group-management' ) ?></a></th>
             		
 					<th scope="col"><?php _e( 'Group avatar', 'bp-group-management' ); ?></th>
-            		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=name"><?php _e( 'Group Name', 'bp-group-management' ) ?></a></th>
+            		<th scope="col"><a href="admin.php?page=bp-group-management&amp;order=name"><?php _e( 'Group Name', 'bp-group-management' ) ?></a></th>
             		<th scope="col"><?php _e( 'Group type', 'bp-group-management' ); ?></th>
-            		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=group_id"><?php _e( 'Date Created', 'bp-group-management' ) ?></a></th>
-            		<th scope="col"><a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;order=popular"><?php _e( 'Number of Members', 'bp-group-management' ) ?></a></th>
+            		<th scope="col"><a href="admin.php?page=bp-group-management&amp;order=group_id"><?php _e( 'Date Created', 'bp-group-management' ) ?></a></th>
+            		<th scope="col"><a href="admin.php?page=bp-group-management&amp;order=popular"><?php _e( 'Number of Members', 'bp-group-management' ) ?></a></th>
             		
             		<?php do_action( 'bp_gm_group_column_header' ); ?>
             	</tr>
@@ -108,8 +109,7 @@ function bp_group_management_admin_main() {
 			<tbody id="the-list">
             	<?php while( bp_groups() ) : bp_the_group(); ?> 
    					<?php 
-   						if ( !$group )
-    						$group =& $groups_template->group;
+    						$group = $groups_template->group;
             		?>	
             		<tr>
             			<th scope="row" class="check-column">
@@ -122,7 +122,7 @@ function bp_group_management_admin_main() {
 						
 						
 						<td scope="row" class="bp-gm-avatar">
-  							 <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&action=edit&id=<?php bp_group_id() ?>" class="edit"><?php bp_group_avatar( 'width=35&height=35' ); ?></a>
+  							 <a href="admin.php?page=bp-group-management&action=edit&id=<?php bp_group_id() ?>" class="edit"><?php bp_group_avatar( 'width=35&height=35' ); ?></a>
  						</td>
 						
 						<td scope="row">
@@ -130,10 +130,10 @@ function bp_group_management_admin_main() {
 									<br/>
 									<?php
 									$controlActions	= array();
-									$controlActions[]	= '<a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=' . bp_get_group_id() . '" class="edit">' . __('Members', 'bp-group-management' ) . '</a>';								
+									$controlActions[]	= '<a href="admin.php?page=bp-group-management&amp;action=edit&amp;id=' . bp_get_group_id() . '" class="edit">' . __('Members', 'bp-group-management' ) . '</a>';								
 									
 									
-									$controlActions[]	= '<a class="delete" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=delete&amp;id=' . bp_get_group_id() . '">' . __("Delete") . '</a>';
+									$controlActions[]	= '<a class="delete" href="admin.php?page=bp-group-management&amp;action=delete&amp;id=' . bp_get_group_id() . '">' . __("Delete") . '</a>';
 									
 									$controlActions[]   = '<a href="' . bp_get_group_permalink( ) . 'admin">' . __( 'Admin', 'bp-group-management' ) . '</a>'; 
 									
@@ -192,7 +192,7 @@ function bp_group_management_admin_main() {
             	
             	<?php endif; ?>
         
-        <a class="button" id="bp-gm-settings-link" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&action=settings"><?php _e( 'Plugin settings', 'bp-group-management' ); ?></a>
+        <a class="button" id="bp-gm-settings-link" href="admin.php?page=bp-group-management&action=settings"><?php _e( 'Plugin settings', 'bp-group-management' ); ?></a>
         </div>
 
 <?php
@@ -207,18 +207,21 @@ function bp_group_management_admin_edit() {
 	$id = (int)$_GET['id'];
 	$group = new BP_Groups_Group( $id, true );
 	
-	switch( $_GET['member_action'] ) {
+	$member_action = isset( $_GET['member_action'] ) ? $_GET['member_action'] : false;
+	$member_id     = isset( $_GET['member_id'] ) ? $_GET['member_id'] : false;
+	
+	switch( $member_action ) {
 		case "kick":
 			if ( !check_admin_referer( 'bp-group-management-action_kick' ) )
 				return false;
 
-			if ( !bp_group_management_ban_member( $_GET['member_id'], $id ) ) { ?>
+			if ( !bp_group_management_ban_member( $member_id, $id ) ) { ?>
 				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>';
 			<?php } else { ?>
 				<div id="message" class="updated fade"><p><?php _e('Member kicked and banned', 'bp-group-management') ?></p></div>
 			<?php }
 
-			do_action( 'groups_banned_member', $_GET['member_id'], $id );
+			do_action( 'groups_banned_member', $member_id, $id );
 			
 			break;
 		
@@ -226,13 +229,13 @@ function bp_group_management_admin_edit() {
 			if ( !check_admin_referer( 'bp-group-management-action_unkick' ) )
 				return false;
 
-			if ( !bp_group_management_unban_member( $_GET['member_id'], $id ) ) { ?>
+			if ( !bp_group_management_unban_member( $member_id, $id ) ) { ?>
 				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
 			<?php } else { ?>
 				<div id="message" class="updated fade"><p><?php _e('Member unbanned', 'bp-group-management'); ?></p></div>
 			<?php }
 
-			do_action( 'groups_banned_member', $_GET['member_id'], $id );
+			do_action( 'groups_banned_member', $member_id, $id );
 			
 			break;
 		
@@ -240,13 +243,13 @@ function bp_group_management_admin_edit() {
 			if ( !check_admin_referer( 'bp-group-management-action_demote' ) )
 				return false;
 
-			if ( !groups_demote_member( $_GET['member_id'], $id ) ) { ?>
+			if ( !groups_demote_member( $member_id, $id ) ) { ?>
 				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
 			<?php } else { ?>
 				<div id="message" class="updated fade"><p><?php _e('Member demoted', 'bp-group-management'); ?></p></div>
 			<?php }
 
-			do_action( 'groups_demoted_member', $_GET['member_id'], $id );
+			do_action( 'groups_demoted_member', $member_id, $id );
 			
 			break;
 		
@@ -254,13 +257,13 @@ function bp_group_management_admin_edit() {
 			if ( !check_admin_referer( 'bp-group-management-action_mod' ) )
 				return false;
 			
-			if ( !bp_group_management_promote_member( $_GET['member_id'], $id, 'mod' ) ) { ?>
+			if ( !bp_group_management_promote_member( $member_id, $id, 'mod' ) ) { ?>
 				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
 			<?php } else { ?>
 				<div id="message" class="updated fade"><p><?php _e('Member promoted to moderator', 'bp-group-management'); ?></p></div>
 			<?php }
 
-			do_action( 'groups_promoted_member', $_GET['member_id'], $id );
+			do_action( 'groups_promoted_member', $member_id, $id );
 			
 			break;
 		
@@ -268,7 +271,7 @@ function bp_group_management_admin_edit() {
 			if ( !check_admin_referer( 'bp-group-management-action_admin' ) )
 				return false;
 				
-			if ( !bp_group_management_promote_member( $_GET['member_id'], $id, 'admin' ) ) { ?>
+			if ( !bp_group_management_promote_member( $member_id, $id, 'admin' ) ) { ?>
 				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
 			<?php } else { ?>
 				<div id="message" class="updated fade"><p><?php _e('Member promoted to admin', 'bp-group-management'); ?></p></div>
@@ -280,7 +283,7 @@ function bp_group_management_admin_edit() {
 			if ( !check_admin_referer( 'bp-group-management-action_add' ) )
 				return false;
 			
-			if ( !bp_group_management_join_group( $id, $_GET['member_id'] ) ) { ?>
+			if ( !bp_group_management_join_group( $id, $member_id ) ) { ?>
 				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
 			<?php } else { ?>
 				<div id="message" class="updated fade"><p><?php _e('User added to group', 'bp-group-management'); ?></p></div>
@@ -289,7 +292,7 @@ function bp_group_management_admin_edit() {
 			break;
 		
 		default :
-			do_action( 'bp_gm_member_action', $group, $id, $_GET['member_action'] );
+			do_action( 'bp_gm_member_action', $group, $id, $member_action, $member_id );
 			
 			break;
 	}
@@ -298,7 +301,7 @@ function bp_group_management_admin_edit() {
 	
 	    <h2><?php _e( 'Group Management', 'bp-group-management' ) ?> : <?php echo bp_get_group_name( $group ); ?></h2>
 	    
-	    <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
+	    <a href="admin.php?page=bp-group-management">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
 	    		
 		<div class="bp-gm-group-actions">
 	    <h3><?php _e( 'Group actions', 'bp-group-management' ); ?></h3>   
@@ -309,7 +312,6 @@ function bp_group_management_admin_edit() {
 
 		
 		<div class="bp-gm-group-members">
-		
 		
 		<?php if ( bp_group_has_members( 'group_id=' . $id . '&exclude_admins_mods=0&exclude_banned=0' ) ) { ?>
 	    <h3><?php _e( 'Manage current and banned group members', 'bp-group-management' ) ?></h3>
@@ -338,7 +340,7 @@ function bp_group_management_admin_edit() {
 						<li class="banned-user">
 							<?php bp_group_member_avatar_mini() ?>
 							<?php
-								$unkicklink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=unkick";
+								$unkicklink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=unkick";
 								$unkicklink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($unkicklink, 'bp-group-management-action_unkick') : $unkicklink;
 							?>
 							<?php bp_group_member_link() ?> <?php _e( '(banned)', 'bp-group-management') ?> <span class="small"> - <a href="<?php echo $unkicklink; ?>" class="confirm" title="<?php _e( 'Remove Ban', 'bp-group-management' ) ?>"><?php _e( 'Remove Ban', 'bp-group-management' ); ?></a>
@@ -349,16 +351,16 @@ function bp_group_management_admin_edit() {
 							<?php bp_group_member_avatar_mini() ?> 
 							
 							<?php
-								$kicklink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=kick";
+								$kicklink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=kick";
 								$kicklink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($kicklink, 'bp-group-management-action_kick') : $kicklink;
 
-								$modlink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=mod";
+								$modlink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=mod";
 								$modlink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($modlink, 'bp-group-management-action_mod') : $modlink;
 								
-								$demotelink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=demote";
+								$demotelink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=demote";
 								$demotelink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($demotelink, 'bp-group-management-action_demote') : $demotelink;
 								
-								$adminlink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=admin";
+								$adminlink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . bp_get_group_member_id() . "&amp;member_action=admin";
 								$adminlink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($adminlink, 'bp-group-management-action_admin') : $adminlink;
 								
 							?>
@@ -409,10 +411,8 @@ function bp_group_management_add_member_list( $id ) {
 		<h3><?php _e('Add members to group', 'bp-group-management') ?></h3>
 		<ul>
 		<?php
-			if ( !$members ) {
-				$query = "SELECT `ID` FROM {$wpdb->users}";
-				$members = $wpdb->get_results( $query, ARRAY_A );
-			}
+			$query = "SELECT `ID` FROM {$wpdb->users}";
+			$members = $wpdb->get_results( $query, ARRAY_A );			
 			
 			foreach ( $members as $key => $m ) {
 				if( groups_is_user_member( $m['ID'], $id ) )
@@ -425,7 +425,7 @@ function bp_group_management_add_member_list( $id ) {
 			$members = array_values( $members );
 			
 						
-			if ( $_GET['members_page'] )
+			if ( isset( $_GET['members_page'] ) )
 				$start = ( $_GET['members_page'] - 1 ) * $per_page;
 			else
 				$start = 0;
@@ -437,7 +437,7 @@ function bp_group_management_add_member_list( $id ) {
 				'base' => add_query_arg( 'members_page', '%#%' ), 
 				'format' => '',
 				'total' => ceil(count($members) / $per_page),
-				'current' => $_GET['members_page'],
+				'current' => isset( $_GET['members_page'] ) ? $_GET['members_page'] : false,
 				'show_all' => false,
 				'prev_next' => true,
 				'prev_text' => '&larr;',
@@ -452,12 +452,12 @@ function bp_group_management_add_member_list( $id ) {
 						
 			for( $i = $start; $i < $start + $per_page; $i++ ) {
 				
-				if( !$members[$i] )
+				if( empty( $members[$i] ) )
 					exit;
 			
-				$addlink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . $members[$i]['ID'] . "&amp;member_action=add";
+				$addlink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id . "&amp;member_id=" . $members[$i]['ID'] . "&amp;member_action=add";
 				
-				if ( $_GET['members_page'] )
+				if ( isset( $_GET['members_page'] ) )
 					$addlink .= "&amp;members_page=" . $_GET['members_page'];
 				
 				$addlink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($addlink, 'bp-group-management-action_add') : $addlink;
@@ -478,7 +478,7 @@ function bp_group_management_add_member_list( $id ) {
 			
 		<div style="clear: both;"> </div>	
 			
-		<a class="button" id="bp-gm-settings-link" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&action=settings">Plugin settings</a>
+		<a class="button" id="bp-gm-settings-link" href="admin.php?page=bp-group-management&action=settings">Plugin settings</a>
 	</div>
 <?php 
 }
@@ -488,16 +488,16 @@ function bp_group_management_admin_delete() {
 	
 	$id = (int)$_GET['id'];
 	$group = new BP_Groups_Group( $id, true );
-	$deletelink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;group_action=delete&amp;id=" . $id;
+	$deletelink = "admin.php?page=bp-group-management&amp;group_action=delete&amp;id=" . $id;
 	$deletelink = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($deletelink, 'bp-group-management-action_group_delete') : $deletelink;
-	$backlink = "admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=" . $id;
+	$backlink = "admin.php?page=bp-group-management&amp;action=edit&amp;id=" . $id;
 
 ?>
 	
 	<div class="wrap">
 	 	<h2><?php _e( 'Group Management', 'bp-group-management' ) ?> : <?php echo bp_get_group_name( $group ); ?></h2>
 	 	  
-	    <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
+	    <a href="admin.php?page=bp-group-management">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
 	    		
 		<div class="bp-gm-group-actions">
 	    <h3><?php _e( 'Group actions', 'bp-group-management' ); ?></h3>   
@@ -529,7 +529,7 @@ function bp_group_management_settings() {
 ?>
 	 <div class="wrap bp-gm-wrap">
             <h2><?php _e( 'Group Management Settings', 'bp-group-management' ) ?></h2>
-            <a href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
+            <a href="admin.php?page=bp-group-management">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
             <form action="options.php" method="post">
             <?php settings_fields( 'bp_gm_settings' ); ?>
             <?php do_settings_sections( 'bp_group_management' ); ?>
@@ -576,7 +576,7 @@ function bp_group_management_settings_check($input) {
 
 
 function bp_group_management_admin_add() {
-	$plugin_page = add_submenu_page( 'bp-general-settings', __('Group Management','bp-group-management'), __('Group Management','bp-group-management'), 'manage_options', __FILE__, 'bp_group_management_admin_screen' );
+	$plugin_page = add_submenu_page( 'bp-general-settings', __('Group Management','bp-group-management'), __('Group Management','bp-group-management'), 'manage_options', 'bp-group-management', 'bp_group_management_admin_screen' );
 	add_action('admin_print_styles-' . $plugin_page, 'bp_group_management_css');
 }
 add_action( is_multisite() && function_exists( 'is_network_admin' ) ? 'network_admin_menu' : 'admin_menu', 'bp_group_management_admin_add', 70 );

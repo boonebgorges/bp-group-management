@@ -108,7 +108,7 @@ function bp_group_management_join_group( $group_id, $user_id = false ) {
 	/* Record this in activity streams */
 	groups_record_activity( array(
 		'user_id' => $user_id,
-		'action' => apply_filters( 'groups_activity_joined_group', sprintf( __( '%s joined the group %s', 'bp-group-management'), bp_core_get_userlink( $user_id ), '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>' ) ),
+		'action' => apply_filters( 'groups_activity_joined_group', sprintf( __( '%s joined the group %s', 'bp-group-management'), bp_core_get_userlink( $user_id ), '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_html( $bp->groups->current_group->name ) . '</a>' ) ),
 		'type' => 'joined_group',
 		'item_id' => $group_id
 	) );
@@ -125,11 +125,13 @@ function bp_group_management_join_group( $group_id, $user_id = false ) {
 function bp_group_management_pagination_links() {
 	global $groups_template;
 	$add_args = array();
-	if ( $_GET['order'] )
+	if ( isset( $_GET['order'] ) )
 		$add_args['order'] = $_GET['order'];
 	
+	$search_terms = isset( $_REQUEST['s'] ) ? $_REQUEST['s'] : '';
+	
 	$links = paginate_links( array(
-			'base' => add_query_arg( array( 'grpage' => '%#%', 'num' => $groups_template->pag_num, 's' => $_REQUEST['s'], 'sortby' => $groups_template->sort_by ) ),
+			'base' => add_query_arg( array( 'grpage' => '%#%', 'num' => $groups_template->pag_num, 's' => $search_terms, 'sortby' => $groups_template->sort_by ) ),
 			'format' => '',
 			'total' => ceil($groups_template->total_group_count / $groups_template->pag_num),
 			'current' => $groups_template->pag_page,
