@@ -3,8 +3,8 @@
 function bp_group_management_group_action_buttons( $id, $group ) {
 ?>
   <p>
-	    	<a class="button" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=edit&amp;id=<?php echo $id; ?>"><?php _e( 'Members', 'bp-group-management' ) ?></a> 
-	    	<a class="button-secondary action" href="admin.php?page=bp-group-management/bp-group-management-bp-functions.php&amp;action=delete&amp;id=<?php echo $id; ?>"><?php _e( 'Delete', 'bp-group-management' ) ?></a>
+	    	<a class="button" href="admin.php?page=bp-group-management&amp;action=edit&amp;id=<?php echo $id; ?>"><?php _e( 'Members', 'bp-group-management' ) ?></a> 
+	    	<a class="button-secondary action" href="admin.php?page=bp-group-management&amp;action=delete&amp;id=<?php echo $id; ?>"><?php _e( 'Delete', 'bp-group-management' ) ?></a>
 	    	<a class="button-secondary action" href="<?php echo bp_get_group_permalink( $group ); ?>admin"><?php _e( 'Admin', 'bp-group-management' ) ?></a> 
 	    	<a class="button-secondary action" href="<?php echo bp_get_group_permalink( $group ); ?>"><?php _e('Visit', 'bp-group-management'); ?></a>
 	    </p>
