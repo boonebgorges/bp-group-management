@@ -24,7 +24,10 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Dutch: [Anja](http://werkgroepen.net/wordpress/)
 
 == Changelog ==
-  
+
+= 0.5.2 =
+* Fixes bug that caused problem with site member listing on non-MS WP installations
+
 = 0.5.1 =
 * Adds 'Remove' feature
 * Fixes some markup
