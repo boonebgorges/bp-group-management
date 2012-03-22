@@ -22,8 +22,12 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Turkish: gk
 * German: Tom
 * Dutch: [Anja](http://werkgroepen.net/wordpress/)
+* Romanian, [Web Geek Science](http://webhostinggeeks.com/) 
 
 == Changelog ==
+
+= 0.5.3 =
+* Adds Romanian translation
 
 = 0.5.2 =
 * Fixes bug that caused problem with site member listing on non-MS WP installations
