@@ -260,7 +260,7 @@ function bp_group_management_admin_edit() {
 				do_action( 'groups_demoted_member', $member_id, $id );
 
 				break;
-	
+
 			case "mod":
 				if ( !check_admin_referer( 'bp-group-management-action_mod' ) )
 					return false;
@@ -302,7 +302,7 @@ function bp_group_management_admin_edit() {
 			case "remove":
 				if ( !check_admin_referer( 'bp-group-management-action_remove' ) )
 					return false;
-	
+
 				if ( !groups_leave_group( $id, $_GET['member_id'] ) ) { ?>
 					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
 				<?php } else { ?>
