@@ -23,7 +23,7 @@ function bp_group_management_locale_init () {
 	$plugin_dir = basename(dirname(__FILE__));
 	$locale = get_locale();
 	$mofile = WP_PLUGIN_DIR . "/bp-group-management/languages/bp-group-management-$locale.mo";
-      
+
       if ( file_exists( $mofile ) )
       		load_textdomain( 'bp-group-management', $mofile );
 }

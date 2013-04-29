@@ -203,115 +203,123 @@ function bp_group_management_admin_edit() {
 ?>
 	<div class="wrap">
 <?php
+	global $groups_template;
 
 	$id = (int)$_GET['id'];
-	$group = new BP_Groups_Group( $id, true );
+
+	bp_has_groups( array(
+		'include' => $id
+	) );
 
 	$member_action = isset( $_GET['member_action'] ) ? $_GET['member_action'] : false;
 	$member_id     = isset( $_GET['member_id'] ) ? $_GET['member_id'] : false;
 
-	switch( $member_action ) {
-		case "kick":
-			if ( !check_admin_referer( 'bp-group-management-action_kick' ) )
-				return false;
+	while ( bp_groups() ) : bp_the_group();
 
-			if ( !bp_group_management_ban_member( $member_id, $id ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>';
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('Member kicked and banned', 'bp-group-management') ?></p></div>
-			<?php }
+		$group = $groups_template->group;
 
-			do_action( 'groups_banned_member', $member_id, $id );
+		switch( $member_action ) {
+			case "kick":
+				if ( !check_admin_referer( 'bp-group-management-action_kick' ) )
+					return false;
 
-			break;
+				if ( !bp_group_management_ban_member( $member_id, $id ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>';
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('Member kicked and banned', 'bp-group-management') ?></p></div>
+				<?php }
 
-		case "unkick":
-			if ( !check_admin_referer( 'bp-group-management-action_unkick' ) )
-				return false;
+				do_action( 'groups_banned_member', $member_id, $id );
 
-			if ( !bp_group_management_unban_member( $member_id, $id ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('Member unbanned', 'bp-group-management'); ?></p></div>
-			<?php }
+				break;
 
-			do_action( 'groups_banned_member', $member_id, $id );
+			case "unkick":
+				if ( !check_admin_referer( 'bp-group-management-action_unkick' ) )
+					return false;
 
-			break;
+				if ( !bp_group_management_unban_member( $member_id, $id ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('Member unbanned', 'bp-group-management'); ?></p></div>
+				<?php }
 
-		case "demote":
-			if ( !check_admin_referer( 'bp-group-management-action_demote' ) )
-				return false;
+				do_action( 'groups_banned_member', $member_id, $id );
 
-			if ( !groups_demote_member( $member_id, $id ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('Member demoted', 'bp-group-management'); ?></p></div>
-			<?php }
+				break;
 
-			do_action( 'groups_demoted_member', $member_id, $id );
+			case "demote":
+				if ( !check_admin_referer( 'bp-group-management-action_demote' ) )
+					return false;
 
-			break;
+				if ( !groups_demote_member( $member_id, $id ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('Member demoted', 'bp-group-management'); ?></p></div>
+				<?php }
 
-		case "mod":
-			if ( !check_admin_referer( 'bp-group-management-action_mod' ) )
-				return false;
+				do_action( 'groups_demoted_member', $member_id, $id );
 
-			if ( !bp_group_management_promote_member( $member_id, $id, 'mod' ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('Member promoted to moderator', 'bp-group-management'); ?></p></div>
-			<?php }
+				break;
 
-			do_action( 'groups_promoted_member', $member_id, $id );
+			case "mod":
+				if ( !check_admin_referer( 'bp-group-management-action_mod' ) )
+					return false;
 
-			break;
+				if ( !bp_group_management_promote_member( $member_id, $id, 'mod' ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('Member promoted to moderator', 'bp-group-management'); ?></p></div>
+				<?php }
 
-		case "admin":
-			if ( !check_admin_referer( 'bp-group-management-action_admin' ) )
-				return false;
+				do_action( 'groups_promoted_member', $member_id, $id );
 
-			if ( !bp_group_management_promote_member( $member_id, $id, 'admin' ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('Member promoted to admin', 'bp-group-management'); ?></p></div>
-			<?php }
+				break;
 
-			break;
+			case "admin":
+				if ( !check_admin_referer( 'bp-group-management-action_admin' ) )
+					return false;
 
-		case "add":
-			if ( !check_admin_referer( 'bp-group-management-action_add' ) )
-				return false;
+				if ( !bp_group_management_promote_member( $member_id, $id, 'admin' ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('Member promoted to admin', 'bp-group-management'); ?></p></div>
+				<?php }
 
-			if ( !bp_group_management_join_group( $id, $member_id ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('User added to group', 'bp-group-management'); ?></p></div>
-			<?php }
+				break;
 
-			break;
+			case "add":
+				if ( !check_admin_referer( 'bp-group-management-action_add' ) )
+					return false;
 
-		case "remove":
-			if ( !check_admin_referer( 'bp-group-management-action_remove' ) )
-				return false;
+				if ( !bp_group_management_join_group( $id, $member_id ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('User added to group', 'bp-group-management'); ?></p></div>
+				<?php }
 
-			if ( !groups_leave_group( $id, $_GET['member_id'] ) ) { ?>
-				<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
-			<?php } else { ?>
-				<div id="message" class="updated fade"><p><?php _e('User removed from group', 'bp-group-management'); ?></p></div>
-			<?php }
+				break;
 
-			break;
+			case "remove":
+				if ( !check_admin_referer( 'bp-group-management-action_remove' ) )
+					return false;
 
-		default :
-			do_action( 'bp_gm_member_action', $group, $id, $member_action, $member_id );
+				if ( !groups_leave_group( $id, $_GET['member_id'] ) ) { ?>
+					<div id="message" class="updated fade"><p><?php _e('Sorry, there was an error.', 'bp-group-management'); ?></p></div>
+				<?php } else { ?>
+					<div id="message" class="updated fade"><p><?php _e('User removed from group', 'bp-group-management'); ?></p></div>
+				<?php }
 
-			break;
+				break;
+
+			default :
+				do_action( 'bp_gm_member_action', $group, $id, $member_action, $member_id );
+
+				break;
 	}
 ?>
 
 
-	    <h2><?php _e( 'Group Management', 'bp-group-management' ) ?> : <?php echo bp_get_group_name( $group ); ?></h2>
+	    <h2><?php _e( 'Group Management', 'bp-group-management' ) ?> : <a href="<?php bp_group_permalink(); ?>"><?php bp_group_name(); ?></a></h2>
 
 	    <a href="admin.php?page=bp-group-management">&larr; <?php _e( 'Group index', 'bp-group-management' ) ?></a>
 
@@ -410,6 +418,7 @@ function bp_group_management_admin_edit() {
 
 	</div>
 <?php
+	endwhile;
 }
 
 
