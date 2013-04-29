@@ -5,6 +5,16 @@ require_once( dirname(__FILE__) . '/bp-group-management-aux.php' );
 function bp_group_management_admin_screen() {
 	global $wpdb;
 
+	if ( defined( 'BP_VERSION' ) && version_compare( BP_VERSION, '1.7', '>=' ) ) {
+		?>
+		<div id="message" class="error fade">
+			<p>
+				<?php printf( __( 'Since BuddyPress 1.7, the functionality of BP Group Management has been added to BuddyPress. Please visit the new <a href="%s">BuddyPress Groups Admin panel</a>, and deactivate this plugin at <a href="%s">plugins.php</a>.', 'bp-group-management' ), bp_get_admin_url( 'admin.php?page=bp-groups' ), bp_get_admin_url( 'plugins.php' ) ) ?>
+			</p>
+		</div>
+		<?php
+	}
+
 	do_action( 'bp_gm_action' );
 
 	$action = isset( $_GET['action'] ) ? $_GET['action'] : false;
