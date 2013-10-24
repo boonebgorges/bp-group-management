@@ -1,0 +1,183 @@
+# Copyright (C) 2010 Boone Gorges
+# This file is distributed under the same license as the BP Group Management package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: BP Group Management 0.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/bp-group-management\n"
+"POT-Creation-Date: 2010-03-07 21:39+0000\n"
+"PO-Revision-Date: 2013-10-24 13:16+0100\n"
+"Language-Team: Web Geeks\n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: bp-group-management-bp-functions.php:5
+#: bp-group-management-bp-functions.php:59
+#: bp-group-management-bp-functions.php:243
+#: bp-group-management-bp-functions.php:367
+msgid "Group Management"
+msgstr "Grupni menadžment"
+
+#: bp-group-management-bp-functions.php:45
+#: bp-group-management-bp-functions.php:163
+#: bp-group-management-bp-functions.php:177
+#: bp-group-management-bp-functions.php:191
+#: bp-group-management-bp-functions.php:205
+#: bp-group-management-bp-functions.php:219
+#: bp-group-management-bp-functions.php:231
+msgid "Sorry, there was an error."
+msgstr "Žao mi je, error se pojavio."
+
+#: bp-group-management-bp-functions.php:47
+msgid "Group deleted."
+msgstr "Grupa izbrisana"
+
+#: bp-group-management-bp-functions.php:65
+msgid "Group ID"
+msgstr "ID grupe"
+
+#: bp-group-management-bp-functions.php:66
+msgid "Group Name"
+msgstr "Ime grupe"
+
+#: bp-group-management-bp-functions.php:67
+msgid "Date Created"
+msgstr "Datum stvaranja"
+
+#: bp-group-management-bp-functions.php:68
+msgid "Number of Members"
+msgstr "Broj članova"
+
+#: bp-group-management-bp-functions.php:104
+msgid "Edit"
+msgstr "Edituj"
+
+#: bp-group-management-bp-functions.php:107
+msgid "Delete"
+msgstr "Obriši"
+
+#: bp-group-management-bp-functions.php:109
+msgid "Visit"
+msgstr "Poseti"
+
+#: bp-group-management-bp-functions.php:165
+msgid "Member kicked and banned"
+msgstr "Član izbačen i zabranjen"
+
+#: bp-group-management-bp-functions.php:179
+msgid "Member unbanned"
+msgstr "Član nije zabranjen"
+
+#: bp-group-management-bp-functions.php:193
+msgid "Member demoted"
+msgstr "Članu  smanjen čin"
+
+#: bp-group-management-bp-functions.php:207
+msgid "Member promoted to moderator"
+msgstr "Član promovisan do moderatora"
+
+#: bp-group-management-bp-functions.php:221
+msgid "Member promoted to admin"
+msgstr "Član promovisan do admina"
+
+#: bp-group-management-bp-functions.php:233
+msgid "User added to group"
+msgstr "Korisnik dodat grupi"
+
+#: bp-group-management-bp-functions.php:244
+#: bp-group-management-bp-functions.php:368
+msgid "Back to group index"
+msgstr "Nazad na index grupe"
+
+#: bp-group-management-bp-functions.php:248
+msgid "Manage current and banned group members"
+msgstr "Upravljaj trenutnom i zabranjenom grupom članova"
+
+#: bp-group-management-bp-functions.php:277
+msgid "(banned)"
+msgstr "(zabranjeno)"
+
+#: bp-group-management-bp-functions.php:277
+msgid "Remove Ban"
+msgstr "Ukloni zabranu"
+
+#: bp-group-management-bp-functions.php:300
+msgid "Kick and ban this member"
+msgstr "Izbaciti i zabraniti ovog člana"
+
+#: bp-group-management-bp-functions.php:300
+msgid "Kick & Ban"
+msgstr "Izbaci i zabrani"
+
+#: bp-group-management-bp-functions.php:302
+#: bp-group-management-bp-functions.php:304
+msgid "Demote to Member"
+msgstr "Smanjiti čin člana"
+
+#: bp-group-management-bp-functions.php:304
+#: bp-group-management-bp-functions.php:306
+msgid "Promote to Admin"
+msgstr "Promoviši admina"
+
+#: bp-group-management-bp-functions.php:306
+msgid "Promote to Moderator"
+msgstr "Promoviši moderatora"
+
+#: bp-group-management-bp-functions.php:325
+msgid "Add members to group"
+msgstr "Dodaj članove grupi"
+
+#: bp-group-management-bp-functions.php:342
+msgid "Add"
+msgstr "Dodaj"
+
+#: bp-group-management-bp-functions.php:371
+msgid "Deleting the group"
+msgstr "Brisanje grupe"
+
+#: bp-group-management-bp-functions.php:372
+msgid "You are about to delete the group"
+msgstr "Izbrisaćete grupu"
+
+#: bp-group-management-bp-functions.php:372
+msgid "This action cannot be undone."
+msgstr "Ova akcija ne može da se poništi."
+
+#: bp-group-management-bp-functions.php:374
+msgid "Delete Group"
+msgstr "Izbriši grupu"
+
+#: bp-group-management-bp-functions.php:375
+msgid "Oops, I changed my mind"
+msgstr "Ups, predomislio sam se"
+
+#: bp-group-management-bp-functions.php:477
+#, php-format
+msgid "%s joined the group %s"
+msgstr "%s je pritupio grupi %s"
+
+#. Plugin Name of an extension
+msgid "BP Group Management"
+msgstr "BP grupni menadžment"
+
+#. Plugin URI of an extension
+msgid "http://teleogistic.net/code/buddypress/bp-group-management"
+msgstr "http://teleogistic.net/code/buddypress/bp-group-management"
+
+#. Description of an extension
+msgid "Allows site administrators to manage BuddyPress group membership"
+msgstr ""
+"Doyvoli administratorima sajta da upravljaju BuddyPress grupnom članarinom"
+
+#. Author of an extension
+msgid "Boone Gorges"
+msgstr "Boone Gorges"
+
+#. Author URI of an extension
+msgid "http://teleogistic.net"
+msgstr "http://teleogistic.net"
