@@ -26,6 +26,7 @@ This plugin creates an admin panel at Dashboard > BuddyPress > Group Management.
 * Dutch: [Anja](http://werkgroepen.net/wordpress/)
 * Romanian, [Web Geek Science](http://webhostinggeeks.com/)
 * B. Radenovich, Slovak (<a href="http://webhostingw.com/">Web Hosting Watch</a>)
+* Serbo-Croatian: Borisa Djuraskovic, [Web Hosting Hub](http://webhostinghub.com/) 
 
 == Changelog ==
 
